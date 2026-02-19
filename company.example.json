@@ -1,0 +1,41 @@
+{
+  "name": "Acme SaaS",
+  "product": "Inventory management for SMB retailers. Syncs stock across Shopify, Amazon, and in-store POS. Real-time updates, low-cost.",
+  "features": [
+    {
+      "name": "Multi-channel Sync",
+      "purpose": "Keep inventory consistent across channels",
+      "differentiator": "Real-time, sub-minute sync; no competitor offers this at our price"
+    },
+    {
+      "name": "Custom Reports",
+      "purpose": "Analytics and forecasting",
+      "differentiator": "Template library; non-technical users can build dashboards"
+    },
+    {
+      "name": "Alerts",
+      "purpose": "Notify on low stock, oversells",
+      "differentiator": "Slack/email; configurable rules"
+    }
+  ],
+  "targetMarket": "US SMB retailers, 10-500 SKUs, doing $500k-$5M revenue. Owner-operator or small ops team.",
+  "competitors": [
+    "CompetitorA: Enterprise-focused, expensive, overkill for SMB",
+    "CompetitorB: Cheaper but slow sync, poor support",
+    "Spreadsheets: Current default for many"
+  ],
+  "currentMetrics": {
+    "users": "~2,000",
+    "retention": "~40% at 90 days",
+    "revenue": "Mid five figures MRR"
+  },
+  "monetization": "Freemium. Free up to 100 SKUs. Starter $29/mo, Pro $99/mo, Enterprise custom.",
+  "stage": "early",
+  "currentChannels": [
+    "SEO and content marketing (blog, guides) — primary",
+    "Paid: tested, CAC too high for current LTV",
+    "Partnerships: some Shopify app store"
+  ],
+  "uniqueConstraints": "Bootstrapped, 5-person team. No sales team. Product-led only.",
+  "notes": "Focus on product-led growth. Need to improve activation — many sign up but don't complete first sync."
+}

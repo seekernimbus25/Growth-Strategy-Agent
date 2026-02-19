@@ -1,0 +1,17 @@
+{
+  "name": "growth-strategy-agent",
+  "version": "1.0.0",
+  "description": "Generate personalized growth strategies using the Reforge framework",
+  "main": "generate.js",
+  "type": "module",
+  "scripts": {
+    "generate": "node generate.js",
+    "start": "node generate.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "openai": "^4.20.0",
+    "@anthropic-ai/sdk": "^0.32.0",
+    "@mohtasham/md-to-docx": "^2.6.1"
+  }
+}
