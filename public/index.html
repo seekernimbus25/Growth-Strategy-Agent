@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Growth Strategy Agent</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background: #f8f9fa;
+      color: #212529;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    label { display: block; margin-bottom: 0.25rem; font-weight: 500; font-size: 0.9rem; }
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      padding: 0.75rem;
+      border: 1px solid #ced4da;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      resize: vertical;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: #0d6efd;
+      box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+    }
+    .format-group {
+      margin: 1.25rem 0;
+    }
+    .format-group label {
+      display: inline;
+      font-weight: normal;
+      margin-right: 1rem;
+      cursor: pointer;
+    }
+    .format-group input { margin-right: 0.35rem; }
+    .actions {
+      margin-top: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      background: #0d6efd;
+      color: #fff;
+      transition: background 0.15s;
+    }
+    button:hover:not(:disabled) {
+      background: #0b5ed7;
+    }
+    button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    .hint {
+      font-size: 0.85rem;
+      color: #6c757d;
+    }
+    .result {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #dee2e6;
+    }
+    .result h2 { font-size: 1.1rem; margin-bottom: 0.75rem; }
+    .result pre {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      font-size: 0.85rem;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .error {
+      color: #dc3545;
+      background: #f8d7da;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+    .spinner {
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Growth Strategy Agent</h1>
+    <p>Enter your company or product description below. The agent will generate a personalized growth strategy for your company/product.</p>
+
+    <label for="company">Company / product description</label>
+    <textarea id="company" placeholder="e.g. SaaS for e-commerce analytics, freemium model, early stage, 50K MAU..."></textarea>
+
+    <div class="format-group">
+      <label><input type="radio" name="format" value="md" checked> Markdown</label>
+      <label><input type="radio" name="format" value="docx"> DOCX</label>
+    </div>
+
+    <div class="actions">
+      <button id="generate" type="button">Generate</button>
+      <span class="hint" id="hint">Typically takes 30–60 seconds</span>
+    </div>
+
+    <div id="result" class="result" hidden>
+      <h2 id="resultTitle">Result</h2>
+      <div id="resultContent"></div>
+      <button id="copy" type="button" style="margin-top: 0.75rem; display: none;">Copy Markdown</button>
+    </div>
+
+    <div id="error" class="error" hidden></div>
+  </div>
+
+  <script>
+    const companyEl = document.getElementById('company');
+    const generateBtn = document.getElementById('generate');
+    const hintEl = document.getElementById('hint');
+    const resultEl = document.getElementById('result');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultContent = document.getElementById('resultContent');
+    const copyBtn = document.getElementById('copy');
+    const errorEl = document.getElementById('error');
+
+    function setLoading(loading) {
+      generateBtn.disabled = loading;
+      if (loading) {
+        generateBtn.innerHTML = '<span class="spinner"></span>Generating...';
+      } else {
+        generateBtn.textContent = 'Generate';
+      }
+    }
+
+    function showError(msg) {
+      errorEl.textContent = msg;
+      errorEl.hidden = false;
+      resultEl.hidden = true;
+    }
+
+    function hideError() {
+      errorEl.hidden = true;
+    }
+
+    generateBtn.addEventListener('click', async () => {
+      const companyInfo = companyEl.value.trim();
+      if (!companyInfo) {
+        showError('Please enter a company or product description.');
+        return;
+      }
+      hideError();
+      resultEl.hidden = true;
+      setLoading(true);
+
+      const format = document.querySelector('input[name="format"]:checked').value;
+
+      try {
+        const res = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ companyInfo, format }),
+        });
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || `Request failed (${res.status})`);
+        }
+
+        if (format === 'docx') {
+          const blob = await res.blob();
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'growth-strategy.docx';
+          a.click();
+          URL.revokeObjectURL(url);
+          resultTitle.textContent = 'Download started';
+          resultContent.innerHTML = '<p>Your DOCX file should be downloading. If not, check your browser settings.</p>';
+          copyBtn.style.display = 'none';
+        } else {
+          const data = await res.json();
+          resultTitle.textContent = 'Result';
+          resultContent.innerHTML = '<pre>' + escapeHtml(data.markdown || '') + '</pre>';
+          copyBtn.style.display = 'inline-block';
+          copyBtn.onclick = () => {
+            navigator.clipboard.writeText(data.markdown || '');
+            copyBtn.textContent = 'Copied!';
+            setTimeout(() => { copyBtn.textContent = 'Copy Markdown'; }, 2000);
+          };
+        }
+        resultEl.hidden = false;
+      } catch (err) {
+        showError(err.message || 'Generation failed. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    function escapeHtml(s) {
+      const d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+  </script>
+</body>
+</html>

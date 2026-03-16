@@ -6,12 +6,17 @@
   "type": "module",
   "scripts": {
     "generate": "node generate.js",
-    "start": "node generate.js"
+    "start": "node generate.js",
+    "serve": "node server.js",
+    "dev": "node server.js"
   },
   "dependencies": {
-    "dotenv": "^16.3.1",
-    "openai": "^4.20.0",
     "@anthropic-ai/sdk": "^0.32.0",
-    "@mohtasham/md-to-docx": "^2.6.1"
+    "@mohtasham/md-to-docx": "^2.6.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.21.0",
+    "html-to-docx": "^1.8.0",
+    "mammoth": "^1.11.0",
+    "openai": "^4.20.0"
   }
 }

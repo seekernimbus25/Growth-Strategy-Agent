@@ -1,6 +1,6 @@
 # Growth Strategy Agent
 
-Generate **personalized growth strategies** for any company, product, or feature using the Reforge Growth Series framework.
+Generate **personalized growth strategies** for any company, product, or feature using a structured full-funnel growth framework.
 
 ## Setup
 
@@ -72,11 +72,10 @@ The strategy document includes:
 5. Acquisition strategy
 6. Monetization strategy
 7. Growth model
-8. User psychology (ELMR + Psych)
-9. Experiments (3+ MVTs)
+8. User psychology
+9. Experiments
 10. Defensibility
 11. Prioritized action plan
-12. References
 
 ## Cursor integration
 

@@ -2,7 +2,7 @@
 
 /**
  * Growth Strategy Agent - CLI
- * Generates personalized growth strategies using the Reforge framework
+ * Generates personalized growth strategies using a structured growth framework
  *
  * Usage:
  *   node generate.js "Free text company description"
@@ -13,7 +13,7 @@
  */
 
 import { readFileSync, writeFileSync, existsSync } from 'fs';
-import { resolve, extname } from 'path';
+import { resolve, extname, basename } from 'path';
 import { buildPrompt, getSystemPrompt } from './framework.js';
 
 // Load dotenv if available
@@ -107,6 +107,35 @@ async function convertToDocx(markdown) {
   return buf;
 }
 
+/**
+ * API-friendly function to run generation.
+ * @param {string|object} companyInfo - Company description (free text or structured object)
+ * @param {'md'|'docx'} [format='md'] - Output format
+ * @returns {Promise<{markdown: string, docxBuffer?: Buffer}>}
+ */
+export async function runGeneration(companyInfo, format = 'md') {
+  if (!companyInfo) {
+    throw new Error('companyInfo is required');
+  }
+  const prompt = buildPrompt(companyInfo);
+
+  if (!OPENAI_API_KEY && !ANTHROPIC_API_KEY) {
+    throw new Error('No API key found. Set OPENAI_API_KEY or ANTHROPIC_API_KEY.');
+  }
+
+  const markdown = await generateStrategy(prompt);
+  if (!markdown) {
+    throw new Error('Failed to generate strategy');
+  }
+
+  const wantDocx = format === 'docx';
+  if (wantDocx) {
+    const docxBuffer = await convertToDocx(markdown);
+    return { markdown, docxBuffer };
+  }
+  return { markdown };
+}
+
 async function main() {
   const { freeText, inputFile, output, format } = parseArgs();
   const companyInfo = loadCompanyInfo(inputFile, freeText);
@@ -118,28 +147,21 @@ async function main() {
     process.exit(1);
   }
 
-  const prompt = buildPrompt(companyInfo);
-
   if (!OPENAI_API_KEY && !ANTHROPIC_API_KEY) {
     const fallbackPath = output || 'growth-strategy-prompt.md';
+    const prompt = buildPrompt(companyInfo);
     writeFileSync(resolve(fallbackPath), `# Growth Strategy Prompt\n\nPaste the below into Cursor or any LLM:\n\n---\n\n## System\n\n${getSystemPrompt()}\n\n## User\n\n${prompt}\n`, 'utf-8');
     console.log(`No API key found. Wrote prompt to ${fallbackPath}`);
     return;
   }
 
-  console.log('Generating growth strategy...');
-  const markdown = await generateStrategy(prompt);
-
-  if (!markdown) {
-    console.error('Failed to generate strategy');
-    process.exit(1);
-  }
-
   const outPath = output ? resolve(output) : resolve('growth-strategy.md');
-  const wantDocx = format === 'docx' || extname(outPath).toLowerCase() === '.docx';
+  const outFormat = format === 'docx' || extname(outPath).toLowerCase() === '.docx' ? 'docx' : 'md';
 
-  if (wantDocx) {
-    const docxBuffer = await convertToDocx(markdown);
+  console.log('Generating growth strategy...');
+  const { markdown, docxBuffer } = await runGeneration(companyInfo, outFormat);
+
+  if (outFormat === 'docx') {
     writeFileSync(outPath, docxBuffer);
     console.log(`Saved DOCX to ${outPath} (editable in Word/Google Docs)`);
   } else {
@@ -148,7 +170,10 @@ async function main() {
   }
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+const isCliEntry = process.argv[1] && basename(process.argv[1]) === 'generate.js';
+if (isCliEntry) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}

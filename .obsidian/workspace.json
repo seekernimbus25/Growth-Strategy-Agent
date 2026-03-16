@@ -11,14 +11,10 @@
             "id": "3ed7c982b009b45d",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Snabbit-growth-strategy.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Snabbit-growth-strategy"
+              "title": "New tab"
             }
           }
         ]
@@ -185,13 +181,42 @@
   },
   "active": "3ed7c982b009b45d",
   "lastOpenFiles": [
-    "~$mplismart_strategy.docx",
-    "Simplismart_strategy.docx",
-    "~$vable_Strategy.docx",
-    "~$rter_strategy.docx",
-    "Lovable_Strategy.docx",
-    "Barter_strategy.docx",
     "growth-strategy.md",
-    "Snabbit-growth-strategy.md"
+    "node_modules/send/node_modules/debug/src/node.js",
+    "node_modules/send/node_modules/debug/src/inspector-log.js",
+    "node_modules/send/node_modules/debug/src/debug.js",
+    "node_modules/send/node_modules/debug/src/index.js",
+    "node_modules/send/node_modules/debug/src/browser.js",
+    "node_modules/send/node_modules/debug/src",
+    "node_modules/object-inspect/test/browser/dom.js",
+    "node_modules/object-inspect/test/values.js",
+    "node_modules/object-inspect/test/undef.js",
+    "node_modules/object-inspect/test/toStringTag.js",
+    "node_modules/object-inspect/CHANGELOG.md",
+    "node_modules/finalhandler/node_modules/debug/README.md",
+    "node_modules/finalhandler/node_modules/debug/CHANGELOG.md",
+    "node_modules/finalhandler/node_modules/ms/readme.md",
+    "node_modules/finalhandler/node_modules/ms/license.md",
+    "node_modules/finalhandler/SECURITY.md",
+    "node_modules/finalhandler/README.md",
+    "node_modules/finalhandler/HISTORY.md",
+    "node_modules/iconv-lite/README.md",
+    "node_modules/iconv-lite/Changelog.md",
+    "node_modules/raw-body/README.md",
+    "node_modules/qs/README.md",
+    "node_modules/qs/LICENSE.md",
+    "node_modules/qs/CHANGELOG.md",
+    "node_modules/media-typer/README.md",
+    "node_modules/media-typer/HISTORY.md",
+    "node_modules/mime/README.md",
+    "node_modules/mime/CHANGELOG.md",
+    "node_modules/side-channel/README.md",
+    "node_modules/side-channel/CHANGELOG.md",
+    "node_modules/side-channel-map/README.md",
+    "node_modules/side-channel-map/CHANGELOG.md",
+    "node_modules/send/HISTORY.md",
+    "node_modules/side-channel-weakmap/README.md",
+    "node_modules/side-channel-weakmap/CHANGELOG.md",
+    "node_modules/mammoth/test/test-data/tiny-picture.png"
   ]
 }
