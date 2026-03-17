@@ -15,16 +15,17 @@ You are an expert growth strategist using a structured full-funnel growth framew
 ## Framework Phases (apply to the company provided)
 1. Retention: Use case (problem, persona, frequency, core action); retention metric; cohorts
 2. Engagement: Organic habit loop (trigger, action, reward); manufactured + environment loops; activation; resurrection
-3. Acquisition: Loops (viral, content, paid, sales); product-channel fit; model-channel fit; three levers
+3. Acquisition: Loops (viral, content, paid, sales); product-channel fit; model-channel fit; three levers. For viral/referral: viral loop blueprint (user gets value, product encourages sharing, shared artifact attracts new users, new users enter loop) tailored to this product; referral mechanics (incentive structure, sharing friction, tie to core action or habit loop). Where relevant, briefly address channel tactics: Organic (SEO/content, social, community, word-of-mouth); Paid (LTV:CAC, creative testing, retargeting); Product (in-product referral, UGC, integrations/API); Partnership (integrations, co-marketing, affiliates).
 4. Monetization: Four fits; pricing; friction balance
 5. Growth Model: Qualitative model (output, habit loops, acquisition loops, linear)
 6. User Psychology: ELMR/Psych applied to 1-2 named flows
-7. Experiments: 3+ MVTs with problem, hypothesis, evidence, prediction, success metric, tradeoff metric
+7. Experiments: 3+ MVTs with problem, hypothesis, evidence, prediction, success metric, tradeoff metric. Prioritize using ICE: for each experiment assign Impact (1-5), Confidence (1-5), Ease (1-5) and a priority tier (e.g. Quick win, High impact, Moonshot). Include a short "Experiment prioritization" table: Experiment name | Impact | Confidence | Ease | Priority.
 8. Defensibility: Which forms apply and how to strengthen
 
 ## Formatting Rules
 - Never use em-dashes (—). Use hyphens (-), colons (:), or commas (,) instead.
 - Tables: No cell may be empty. Every header and every data cell must contain content. The first column header must name the row dimension (e.g., "Parameter", "Experiment", "Action"); every first-column body cell must have a value. Never use \`| | Col2 |\` or leave any cell blank.
+- Recommend what to track and one or two dashboard views (e.g. acquisition funnel, retention cohorts, experiment pipeline).
 `;
 
 const OUTPUT_STRUCTURE = `
@@ -34,13 +35,15 @@ const OUTPUT_STRUCTURE = `
 2. **Company & Product Context**: Recap of product, features, market, competitors, stage; assumptions
 3. **Retention Strategy**: Use case for this product; retention metric; cohort implications; feature-level retention impact
 4. **Engagement & Habit Loops**: Organic loop tailored to product; manufactured + environment tactics; activation; resurrection
-5. **Acquisition Strategy**: Loops applicable with fit reasoning; order of operations; competitor context
+5. **Acquisition Strategy**: Loops applicable with fit reasoning; viral loop blueprint and referral mechanics for this product; order of operations; competitor context; channel tactics where relevant (organic, paid, product, partnership)
 6. **Monetization Strategy**: Four fits; pricing levers; friction tradeoffs
 7. **Growth Model**: Qualitative model (diagram or step list)
 8. **User Psychology**: ELMR/Psych for 1-2 named flows; +/- psych by step
-9. **Experiments**: 3+ MVTs with full structure; prioritized
+9. **Experiments**: 3+ MVTs with full structure; ICE prioritization table (Experiment name | Impact | Confidence | Ease | Priority); prioritized
 10. **Defensibility**: Which forms apply; how to strengthen
-11. **Prioritized Action Plan**: 5-10 actions with owners, order, impact
+11. **Key Metrics to Track**: One short subsection or table with metrics by phase: Acquisition (CAC, channel conversion, top-of-funnel); Activation (time to first value, onboarding completion, aha rate); Retention (core retention metric, DAU/MAU or WAU/MAU, cohort retention); Referral/viral if relevant (referral rate, viral coefficient, share rate); Revenue if relevant (LTV, ARPU, payback period). Recommend one or two dashboard views (e.g. acquisition funnel, retention cohorts, experiment pipeline).
+12. **Prioritized Action Plan**: 5-10 actions with owners, order, impact
+13. **Suggested First 6 Weeks** (optional): Group actions by Weeks 1-2 (analysis, opportunity identification, experiment roadmap); Weeks 3-4 (first wave of experiments; iterate); Weeks 5-6 (scale winners; playbooks; monitoring). 2-3 bullets per phase.
 `;
 
 export function buildPrompt(companyInfo) {
