@@ -1,7 +1,7 @@
 {
   "name": "growth-strategy-agent",
   "version": "1.0.0",
-  "description": "Generate personalized growth strategies using the Reforge framework",
+  "description": "Generate personalized growth strategies using a structured growth framework",
   "main": "generate.js",
   "type": "module",
   "scripts": {
